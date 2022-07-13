@@ -1,0 +1,25 @@
+
+.group_list_item {
+    /*background-color: #d9ecff;*/
+}
+
+.group_list_item_wrapper {
+    padding: 0.6rem;
+    display: grid;
+    place-content: center;
+}
+
+.group_list_item_link {
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+    color: #525252;
+}
+
+.group_list_item_link:hover .group_list_item_wrapper {
+    background-color: #bac8db;
+}
+
+.group_list_item_link.active .group_list_item_wrapper {
+    background-color: white;
+}

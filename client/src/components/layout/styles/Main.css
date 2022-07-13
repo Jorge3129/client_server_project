@@ -1,0 +1,22 @@
+
+.groups_sidebar {
+    background-color: #d9ecff;
+    width: 12rem;
+}
+
+.groups_sidebar_title {
+    display: grid;
+    place-content: center;
+    font-weight: bold;
+    padding: 0.5em 0;
+}
+
+.group_list {
+    /*background-color: #d9ecff;*/
+}
+
+.add_group_button_container {
+    display: grid;
+    place-content: center;
+    padding: 0.5em 0;
+}
