@@ -1,47 +1,42 @@
-import {FC, FormEvent} from 'react';
+import {Dispatch, FC, FormEvent, SetStateAction} from 'react';
 import {Button, CloseButton, Form, Modal} from "react-bootstrap";
-import groupApi from "../../api/group-api";
-import {useGroupContext} from "../../providers/GroupsProvider";
 import {useModalContext} from "../../providers/ModalProvider";
-import {useNavigate} from "react-router-dom";
+import {IProduct} from "../../models/product";
+import productApi from "../../api/product-api";
 import './styles/Modal.css'
 
 interface IProps {
    show: boolean,
    onHide: () => void
+   setProducts: Dispatch<SetStateAction<IProduct[] | undefined>>
 }
 
-const DeleteGroupModal: FC<IProps> = (props) => {
+const DeleteProductModal: FC<IProps> = ({onHide, show, setProducts}) => {
 
-   const {setGroups} = useGroupContext();
-   const {onHide} = props;
    const {modal} = useModalContext();
-   const group = modal.data?.group
-
-   const navigate = useNavigate();
+   const product = modal.data?.product
 
    const onSubmit = async (e: FormEvent) => {
       e.preventDefault()
-      const groupId = group?.id;
-      if (!groupId) return;
-      const res = await groupApi.deleteGroup(groupId);
-      if (res) console.log(res)
-      setGroups(groups => (groups || []).filter(g => g.id !== groupId))
-      navigate('/')
+      const productId = product.id;
+      if (!productId) return;
+      const res = await productApi.deleteProduct(productId);
+      console.log(res)
+      setProducts(prods => (prods || []).filter(p => p.id !== productId))
       onHide();
    }
 
    return (
-       <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+       <Modal {...{show, onHide}} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
           <CloseButton className="close" onClick={onHide}/>
           <Modal.Header>
              <Modal.Title id="contained-modal-title-vcenter">
-                Delete group
+                Delete product
              </Modal.Title>
           </Modal.Header>
           <Modal.Body>
              <div className="mb-3">
-                Are you sure you want to delete group <b>{group?.name}</b>?
+                Are you sure you want to delete product <b>{product?.name}</b>?
              </div>
              <Form onSubmit={onSubmit} noValidate>
                 <Button className="me-2" variant="danger" type="submit">
@@ -56,5 +51,5 @@ const DeleteGroupModal: FC<IProps> = (props) => {
    );
 };
 
-export default DeleteGroupModal;
+export default DeleteProductModal;
 

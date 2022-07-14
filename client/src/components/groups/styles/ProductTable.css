@@ -33,6 +33,22 @@
     justify-content: center;
     align-items: center;
     padding: 0.4rem 2rem;
+    position: relative;
+}
+
+.product_menu_button {
+    height: 100%;
+    width: 1.3rem;
+    display: grid;
+    place-content: center;
+    position: absolute;
+    color: dimgrey;
+    right: 0;
+}
+
+.product_menu_button:hover {
+    cursor: pointer;
+    color: black;
 }
 
 .table_cell_title {

@@ -6,6 +6,7 @@ import {NoId} from "../../models/utils";
 import {Button, CloseButton, Form, Modal} from "react-bootstrap";
 import groupApi from "../../api/group-api";
 import {useGroupContext} from "../../providers/GroupsProvider";
+import './styles/Modal.css'
 
 interface IProps {
    show: boolean,

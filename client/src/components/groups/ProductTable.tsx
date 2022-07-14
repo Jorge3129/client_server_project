@@ -1,9 +1,10 @@
-import {FC} from 'react';
+import {FC, useState} from 'react';
 import {IProduct} from '../../models/product';
 import {useSort} from "../../hooks/useSort";
 import SortAngle from "../SortAngle";
 import {titleCase} from "../../utils/format";
 import './styles/ProductTable.css'
+import TableCell from "./TableCell";
 
 interface IProps {
    products: IProduct[]
@@ -14,6 +15,7 @@ const fields = ["id", "name", "description", "manufacturer", "price", "amount", 
 const ProductTable: FC<IProps> = ({products}) => {
 
    const [sortedProducts, {sort, chooseSort}] = useSort<IProduct>(products)
+   const [showMenu, setShowMenu] = useState<number>(0);
 
    const head =
        <tr>{fields.map(field =>
@@ -29,14 +31,12 @@ const ProductTable: FC<IProps> = ({products}) => {
 
    const rows = sortedProducts.map(product =>
        <tr key={product.id} className="data_row">{
-          fields.map(field =>
-              <td key={product.id + field}>
-                 <div className="table_cell">
-                    <span className="table_cell_title">
-                       {product[field as keyof IProduct]}
-                    </span>
-                 </div>
-              </td>)}
+          fields.map(field => <TableCell key={field}
+              showMenu={showMenu}
+              setShowMenu={setShowMenu}
+              product={product}
+              field={field}
+          />)}
        </tr>)
 
    return (

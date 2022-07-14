@@ -1,9 +1,9 @@
 import {Dispatch, FC, SetStateAction} from 'react';
-import {countTotalPrice} from "../utils/group";
+import {countTotalPrice} from "../../utils/group";
 import {Button, Form} from "react-bootstrap";
-import {IGroup} from "../models/group";
-import {IProduct} from "../models/product";
-import {ModalType, useModalContext} from "../providers/ModalProvider";
+import {IGroup} from "../../models/group";
+import {IProduct} from "../../models/product";
+import {ModalType, useModalContext} from "../../providers/ModalProvider";
 
 interface IProps {
    group: IGroup
