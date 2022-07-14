@@ -13,19 +13,21 @@ import EditGroupModal from '../modals/EditGroupModal';
 import {useSearch} from "../../hooks/useSearch";
 import DeleteProduct from "../modals/DeleteProduct";
 import EditProductModal from "../modals/EditProductModal";
+import {useGroupContext} from "../../providers/GroupsProvider";
 
 const GroupPage = () => {
    const {groupId} = useParams();
    const numberGroupId = parseInt(groupId || '');
+   const {groups} = useGroupContext();
    const [group, setGroup] = useState<IGroup>();
    const {modal, clearModal} = useModalContext()
 
    useEffect(() => {
-      if (!numberGroupId) return;
-      groupApi.getOneGroup(numberGroupId).then(data => {
-         if ("id" in data) setGroup(data);
-      })
-   }, [numberGroupId])
+      if (!numberGroupId || !groups) return;
+      const newGroup = groups.find(g => g.id === numberGroupId)
+      if (!newGroup) return;
+      setGroup(newGroup)
+   }, [numberGroupId, groups])
 
    const [products, setProducts] = useFetchGroupProducts(group);
 

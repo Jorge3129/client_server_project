@@ -6,29 +6,39 @@ import {Button, CloseButton, Form, Modal} from "react-bootstrap";
 import groupApi from "../../api/group-api";
 import {useGroupContext} from "../../providers/GroupsProvider";
 import './styles/Modal.css'
+import {useModalContext} from "../../providers/ModalProvider";
+import {convertProductToForm} from "../../utils/product";
 
 interface IProps {
    show: boolean,
    onHide: () => void
 }
 
-type INewGroup = NoId<IGroup>
+const EditGroupModal: FC<IProps> = ({show, onHide}) => {
 
-const EditGroupModal: FC<IProps> = (props) => {
-
-   const {register, handleSubmit} = useForm<INewGroup>();
    const {setGroups} = useGroupContext();
-   const {onHide} = props;
+   const {modal} = useModalContext();
+   const group = modal.data?.group
+   const {register, handleSubmit, reset} = useForm<IGroup>({defaultValues: group});
 
-   const onSubmit = async (data: INewGroup) => {
-      const res = await groupApi.postGroup(data);
+   const onSubmit = async (data: IGroup) => {
+      const res = await groupApi.updateGroup(data);
       console.log(res)
-      if (typeof res === "object") setGroups(groups => [...(groups || []), res])
+      if (!res) setGroups(groups => {
+         const initGroups = groups || []
+         const index = initGroups.findIndex(p => p.id === data.id);
+         return [...initGroups.slice(0, index), data, ...initGroups.slice(index + 1)]
+      })
       onHide();
    }
 
+   useEffect(() => {
+      const group = modal.data?.group
+      reset(group)
+   }, [modal])
+
    return (
-       <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+       <Modal {...{show, onHide}} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
           <CloseButton className="close" onClick={onHide}/>
           <Modal.Header>
              <Modal.Title id="contained-modal-title-vcenter">
