@@ -2,6 +2,7 @@ import {IGroup} from "../models/group";
 import {BaseAPI} from "./base-api";
 import {API_URL} from "./constants";
 import {NoId} from "../models/utils";
+import {IProduct} from "../models/product";
 
 
 class GroupApi extends BaseAPI {
@@ -36,6 +37,12 @@ class GroupApi extends BaseAPI {
 
    public async deleteGroup(id: number): Promise<any> {
       return this.delete("/" + id)
+          .then(res => res.data)
+          .catch(err => err.response.data)
+   }
+
+   public async getGroupProducts(groupId: number): Promise<IProduct[]> {
+      return this.get<IProduct[]>("/" + groupId + '/products')
           .then(res => res.data)
           .catch(err => err.response.data)
    }

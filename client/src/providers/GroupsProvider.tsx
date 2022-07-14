@@ -1,12 +1,11 @@
 import {IGroup} from "../models/group"
-import {createContext, FC, PropsWithChildren, useContext, useEffect, useState} from "react";
+import {createContext, Dispatch, FC, PropsWithChildren, SetStateAction, useContext, useEffect, useState} from "react";
 import groupApi from "../api/group-api";
-
 
 interface IGroupContext {
    groups: IGroup[] | null
    loading: boolean
-   fetchGroups: () => void
+   setGroups: Dispatch<SetStateAction<IGroup[] | null>>
 }
 
 export const GroupContext = createContext<IGroupContext>(null!)
@@ -28,7 +27,7 @@ export const GroupsProvider: FC<PropsWithChildren<any>> = ({children}) => {
       fetchGroups()
    }, [])
 
-   const value = {groups, loading, fetchGroups};
+   const value = {groups, loading, setGroups};
 
    return <GroupContext.Provider value={value}>{children}</GroupContext.Provider>
 

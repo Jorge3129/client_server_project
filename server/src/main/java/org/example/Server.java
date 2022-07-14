@@ -33,7 +33,7 @@ public class Server {
             exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
 
             if (exchange.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
-               exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS");
+               exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS");
                exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type,Authorization");
                exchange.sendResponseHeaders(204, -1);
                return;

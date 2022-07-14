@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import productApi from "../api/product-api";
-import {IProduct} from "../models/product";
+import productApi from "../../api/product-api";
+import {IProduct} from "../../models/product";
 
 const ProductList = () => {
 

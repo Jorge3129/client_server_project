@@ -1,3 +1,4 @@
+import {ToString} from "./utils"
 
 export interface IProduct {
    id: number
@@ -8,3 +9,5 @@ export interface IProduct {
    amount: number
    groupId: number
 }
+
+

@@ -1,0 +1,47 @@
+
+.group_page {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+}
+
+.group_info {
+    background-color: #bac8db;
+    padding: 1rem 2rem;
+    width: 100%;
+    position: relative;
+}
+
+.group_info_controls {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5em 0;
+}
+
+.add_product_btn {
+    width: fit-content;
+}
+
+.search_bar {
+    width: fit-content;
+}
+
+.group_menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1rem;
+}
+
+
+@media screen and (max-width: 768px) {
+    .group_info_controls {
+        flex-direction: column;
+    }
+
+    .add_product_btn {
+        margin: 0.6rem 0;
+    }
+}

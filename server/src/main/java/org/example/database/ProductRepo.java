@@ -14,9 +14,9 @@ public class ProductRepo {
       try {
          this.connection = db.getConnection();
 
-         Statement st1 = connection.createStatement();
-         String dropTable = "DROP TABLE IF EXISTS products";
-         st1.execute(dropTable);
+//         Statement st1 = connection.createStatement();
+//         String dropTable = "DROP TABLE IF EXISTS products";
+//         st1.execute(dropTable);
 
          Statement st = connection.createStatement();
          String createTable = "CREATE TABLE IF NOT EXISTS products(" +

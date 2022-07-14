@@ -45,3 +45,11 @@ body {
 .App {
   text-align: center;
 }
+
+.icon_button {
+  background-color: transparent;
+  color: dimgrey;
+  outline: none;
+  border: none;
+  padding: 0.5rem;
+}

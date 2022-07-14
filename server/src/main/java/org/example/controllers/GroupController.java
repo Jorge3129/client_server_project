@@ -4,9 +4,11 @@ import com.sun.net.httpserver.HttpExchange;
 import org.example.database.Db;
 import org.example.database.GroupRepo;
 import org.example.models.Group;
+import org.example.models.Product;
 import org.example.utils.BodyParser;
 import org.example.utils.Processor;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class GroupController {
@@ -56,6 +58,13 @@ public class GroupController {
       }
    }
 
+   public static void getGroupProducts(HttpExchange exchange) {
+      int id = getId(exchange);
+      if (isNullGroup(exchange, id)) return;
+      List<Product> products = groupRepo.getGroupProducts(id);
+      Processor.process(exchange, products, 200);
+   }
+
    private static boolean isNotUniqueGroup(HttpExchange exchange, Group group) {
       boolean exists = groupRepo.checkIfNameExists(group.getName());
       if (exists)
@@ -76,6 +85,8 @@ public class GroupController {
    }
 
    private static int getId(HttpExchange exchange) {
-      return Integer.parseInt(exchange.getRequestURI().getPath().replace("/api/groups/", ""));
+      String[] splitUrl = exchange.getRequestURI().getPath().split("/");
+      System.out.println(Arrays.toString(splitUrl));
+      return Integer.parseInt(splitUrl[3]);
    }
 }

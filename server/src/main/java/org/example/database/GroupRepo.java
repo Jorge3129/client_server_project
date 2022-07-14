@@ -1,6 +1,7 @@
 package org.example.database;
 
 import org.example.models.Group;
+import org.example.models.Product;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,9 +15,9 @@ public class GroupRepo {
       try {
          this.connection = db.getConnection();
 
-         Statement st1 = connection.createStatement();
-         String dropTable = "DROP TABLE IF EXISTS groups";
-         st1.execute(dropTable);
+//         Statement st1 = connection.createStatement();
+//         String dropTable = "DROP TABLE IF EXISTS groups";
+//         st1.execute(dropTable);
 
          Statement st = connection.createStatement();
          String createTable = "CREATE TABLE IF NOT EXISTS groups(" +
@@ -71,7 +72,9 @@ public class GroupRepo {
 
    public Group getOneGroup(int id) {
       Group result = null;
-      String sql = "SELECT * FROM groups WHERE id = ?";
+      String sql = "SELECT g.id, g.name, g.description, " +
+          "(SELECT SUM(p.price * p.amount) FROM products p WHERE p.groupId = g.id) totalPrice " +
+          "FROM groups g WHERE id = ?";
       try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
          preparedStatement.setInt(1, id);
          ResultSet resultSet = preparedStatement.executeQuery();
@@ -79,7 +82,8 @@ public class GroupRepo {
             result = new Group(
                 resultSet.getInt("id"),
                 resultSet.getString("name"),
-                resultSet.getString("description")
+                resultSet.getString("description"),
+                resultSet.getDouble("totalPrice")
             );
          }
          resultSet.close();
@@ -112,6 +116,30 @@ public class GroupRepo {
       } catch (Exception e) {
          throw new RuntimeException(e);
       }
+   }
+
+   public List<Product> getGroupProducts(int id) {
+      List<Product> products = new ArrayList<>();
+      String sql = "SELECT * FROM products WHERE groupId = ?";
+      try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+         preparedStatement.setInt(1, id);
+         ResultSet resultSet = preparedStatement.executeQuery();
+         while (resultSet.next()) {
+            products.add(new Product(
+                resultSet.getInt("id"),
+                resultSet.getString("name"),
+                resultSet.getInt("groupId"),
+                resultSet.getString("description"),
+                resultSet.getString("manufacturer"),
+                resultSet.getDouble("price"),
+                resultSet.getInt("amount")
+            ));
+         }
+         resultSet.close();
+      } catch (Exception e) {
+         throw new RuntimeException(e);
+      }
+      return products;
    }
 
    public boolean checkIfNameExists(String name) {

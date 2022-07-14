@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-undef */
 import {FC} from 'react';
 import {useForm} from "react-hook-form";
 import {IGroup} from "../../models/group";
@@ -14,10 +13,11 @@ interface IProps {
 
 type INewGroup = NoId<IGroup>
 
-const AddGroupModal: FC<IProps> = ({onHide, show}) => {
+const EditGroupModal: FC<IProps> = (props) => {
 
    const {register, handleSubmit} = useForm<INewGroup>();
    const {setGroups} = useGroupContext();
+   const {onHide} = props;
 
    const onSubmit = async (data: INewGroup) => {
       const res = await groupApi.postGroup(data);
@@ -27,11 +27,11 @@ const AddGroupModal: FC<IProps> = ({onHide, show}) => {
    }
 
    return (
-       <Modal {...{onHide, show}} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+       <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
           <CloseButton className="close" onClick={onHide}/>
           <Modal.Header>
              <Modal.Title id="contained-modal-title-vcenter">
-                Add Group
+                Edit Group
              </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -53,5 +53,5 @@ const AddGroupModal: FC<IProps> = ({onHide, show}) => {
    );
 };
 
-export default AddGroupModal;
+export default EditGroupModal;
 

@@ -17,7 +17,7 @@
 }
 
 .group_list_item_link:hover .group_list_item_wrapper {
-    background-color: #bac8db;
+    /*background-color: #bac8db;*/
 }
 
 .group_list_item_link.active .group_list_item_wrapper {
