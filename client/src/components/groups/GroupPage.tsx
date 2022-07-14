@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {IGroup} from '../../models/group';
-import groupApi from "../../api/group-api";
 import AddProductModal from "../modals/AddProductModal";
 import ProductTable from "./ProductTable";
 import {useFetchGroupProducts} from "../../hooks/useFetchGroupProducts";
